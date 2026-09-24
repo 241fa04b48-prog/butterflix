@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07080c">
+  <title>Movie details · Butterflix</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0f16'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='%23e8c07a' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body data-page="details">
+  <div id="details-app" class="app-shell">
+    <header class="topbar">
+      <a class="brand-lockup" href="index.html">
+        <span class="brand-mark"><span class="brand-b">B</span><span class="brand-play">▶</span></span>
+        <span class="brand-word">BUTTERFLIX</span>
+      </a>
+      <nav class="main-nav">
+        <a class="nav-link" href="index.html#home">Home</a>
+        <a class="nav-link active" href="index.html#movies">Movies</a>
+        <a class="nav-link" href="industry.html?industry=Hollywood">Hollywood</a>
+        <a class="nav-link" href="industry.html?industry=Bollywood">Bollywood</a>
+        <a class="nav-link" href="industry.html?industry=Tollywood">Tollywood</a>
+        <a class="nav-link admin-only is-hidden" href="index.html#admin">Manage</a>
+      </nav>
+      <div class="top-actions">
+        <button class="ghost-button compact-button admin-only is-hidden" id="quick-add">＋ Add movie</button>
+        <a class="ghost-button compact-button" id="auth-link" href="login.html">Login</a>
+      </div>
+    </header>
+    <main id="detail-main"></main>
+    <footer class="footer">
+      <div class="brand-lockup">
+        <span class="brand-mark"><span class="brand-b">B</span><span class="brand-play">▶</span></span>
+        <span class="brand-word">BUTTERFLIX</span>
+      </div>
+      <p>Your World of Cinema</p>
+      <span class="footer-note">Made for the movies · © 2026</span>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <div id="movie-modal" class="modal-backdrop is-hidden">
+    <div class="movie-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div class="modal-layout">
+        <aside class="modal-preview">
+          <div id="poster-preview" class="poster-preview"></div>
+          <p class="preview-hint">Poster preview updates as you type a URL.</p>
+        </aside>
+        <div class="modal-body">
+          <div class="modal-heading">
+            <p class="eyebrow">Catalogue entry</p>
+            <h2 id="modal-title">Edit movie</h2>
+            <p>Update genre, rating, status, and the rest of the record.</p>
+          </div>
+          <form id="movie-form">
+            <input type="hidden" id="movie-id" name="id">
+            <div class="form-grid">
+              <label>Movie title<input required id="movie-title" name="title"></label>
+              <label>Genre<input required id="movie-genre" name="genre" list="genre-options" placeholder="Choose or type a genre"><datalist id="genre-options"></datalist></label>
+              <label>Language<input required id="movie-language" name="language"></label>
+              <label>Type<select id="movie-type" name="type"><option>Movies</option><option>TV Shows</option><option>Cartoons</option></select></label>
+              <label>Director<input required id="movie-director" name="director"></label>
+              <label>Cast<input id="movie-cast" name="cast"></label>
+              <label>Release date<input required id="movie-releaseDate" type="date" name="releaseDate"></label>
+              <label>Duration<input required id="movie-duration" name="duration"></label>
+              <label>Rating<input required id="movie-rating" type="number" min="0" max="10" step="0.1" name="rating"></label>
+              <label class="form-wide">Description<textarea required id="movie-description" name="description" rows="3"></textarea></label>
+              <label>Poster URL<input id="movie-poster" name="poster"></label>
+              <label>Backdrop URL<input id="movie-backdrop" name="backdrop"></label>
+              <label>Trailer URL<input id="movie-trailer" name="trailer"></label>
+              <label>Status<select id="movie-status" name="status"><option>Published</option><option>Coming Soon</option><option>Draft</option></select></label>
+            </div>
+            <div id="genre-chip-row" class="genre-chip-row"></div>
+            <div class="form-actions">
+              <button type="button" class="ghost-button" id="modal-cancel">Cancel</button>
+              <button type="submit" class="primary-button">Save changes <span>↗</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="confirm-modal" class="modal-backdrop is-hidden">
+    <div class="confirm-modal" role="dialog" aria-modal="true">
+      <p class="eyebrow">Remove from catalogue</p>
+      <h2 id="confirm-title">Delete this movie?</h2>
+      <p id="confirm-copy"></p>
+      <div class="form-actions">
+        <button type="button" class="ghost-button" id="confirm-cancel">Keep movie</button>
+        <button type="button" class="danger-button" id="confirm-delete">Delete movie</button>
+      </div>
+    </div>
+  </div>
+  <div id="trailer-modal" class="modal-backdrop is-hidden">
+    <div class="trailer-modal" role="dialog" aria-modal="true" aria-label="Trailer player">
+      <div class="trailer-head">
+        <h2 id="trailer-title"></h2>
+        <button class="modal-close" id="trailer-close" aria-label="Close trailer">×</button>
+      </div>
+      <div class="trailer-frame-wrap">
+        <iframe id="trailer-frame" src="" title="Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

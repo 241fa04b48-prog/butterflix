@@ -1,0 +1,44 @@
+{
+  "admin@butterflix.com": {
+    "name": "Admin",
+    "email": "admin@butterflix.com",
+    "password": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "admin",
+    "createdAt": 1790142138354
+  },
+  "manoj@gmail.com": {
+    "name": "manoj",
+    "email": "manoj@gmail.com",
+    "password": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
+    "role": "admin",
+    "createdAt": 1790143060034
+  },
+  "pavan@gmail.com": {
+    "name": "pavan",
+    "email": "pavan@gmail.com",
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "admin",
+    "createdAt": 1790143240291
+  },
+  "check.user@test.com": {
+    "name": "Check User",
+    "email": "check.user@test.com",
+    "password": "43041d924abebba35b57c0ec3770b1ed265d8630dc78433ea3c7bb1a1fd7a42d",
+    "role": "user",
+    "createdAt": 1790143801641
+  },
+  "manoj12@gmail.com": {
+    "name": "Manoj",
+    "email": "manoj12@gmail.com",
+    "password": "686529e6047ef8614fe6a43dfbb611e9b6843a75c0d7acd4c2476d7b94e95b80",
+    "role": "admin",
+    "createdAt": 1790146298053
+  },
+  "manoj123@gmail.com": {
+    "name": "Manoj kumar",
+    "email": "manoj123@gmail.com",
+    "password": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+    "role": "admin",
+    "createdAt": 1790209238684
+  }
+}

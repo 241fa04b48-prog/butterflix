@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07080c">
+  <title>Butterflix · Movie Management</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0f16'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='%23e8c07a' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body data-page="home">
+  <div id="splash" class="splash-screen">
+    <div class="splash-poster poster-one"></div>
+    <div class="splash-poster poster-two"></div>
+    <div class="splash-poster poster-three"></div>
+    <div class="splash-grain"></div>
+    <div class="splash-orb orb-one"></div>
+    <div class="splash-orb orb-two"></div>
+    <div id="splash-butterflies"></div>
+    <div class="splash-content">
+      <div class="brand-mark large"><span class="brand-b">B</span><span class="brand-play">▶</span></div>
+      <p class="eyebrow splash-eyebrow">Cinema catalogue</p>
+      <h1>BUTTERFLIX</h1>
+      <p class="splash-tagline">Discover. Manage. Experience.</p>
+      <p class="splash-mantra">Add · Update · Delete · Filter by genre</p>
+      <div class="splash-loader"><span></span></div>
+    </div>
+    <div class="splash-foot"><span>BF / 2026</span><span>Movie management system</span></div>
+  </div>
+
+  <div id="app" class="app-shell is-hidden">
+    <header class="topbar">
+      <a class="brand-lockup" href="#home" aria-label="Butterflix home">
+        <span class="brand-mark"><span class="brand-b">B</span><span class="brand-play">▶</span></span>
+        <span class="brand-word">BUTTERFLIX</span>
+      </a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a class="nav-link active" href="#home">Home</a>
+        <a class="nav-link" href="#movies">Movies</a>
+        <a class="nav-link" href="index.html#tvshows">TV Shows</a>
+        <a class="nav-link" href="index.html#cartoons">Cartoons</a>
+        <a class="nav-link" href="#genres">Genres</a>
+        <a class="nav-link" href="industry.html?industry=Hollywood">Hollywood</a>
+        <a class="nav-link" href="industry.html?industry=Bollywood">Bollywood</a>
+        <a class="nav-link" href="industry.html?industry=Tollywood">Tollywood</a>
+        <a class="nav-link admin-only is-hidden" href="#admin">Manage</a>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-button" id="search-toggle" aria-label="Search"><span class="icon">⌕</span></button>
+        <button class="ghost-button compact-button admin-only is-hidden" id="quick-add">＋ Add movie</button>
+        <a class="ghost-button compact-button" id="auth-link" href="login.html">Login</a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Open menu"><span></span><span></span></button>
+      </div>
+    </header>
+
+    <main id="home">
+      <section class="hero-section" id="hero"></section>
+
+      <section class="content-section spotlight-section" id="spotlight">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Now featuring</p>
+            <h2>Spotlight <em>slider</em></h2>
+          </div>
+          <div class="slider-controls">
+            <button class="ghost-button compact-button admin-only is-hidden" id="spotlight-manage"><span>★</span> Manage</button>
+            <button type="button" id="slide-prev" aria-label="Previous slide">←</button>
+            <button type="button" id="slide-next" aria-label="Next slide">→</button>
+          </div>
+        </div>
+        <div class="spotlight-slider" id="spotlight-slider">
+          <div class="spotlight-track" id="spotlight-track"></div>
+        </div>
+        <div class="slider-dots" id="slider-dots"></div>
+      </section>
+
+      <section class="content-section search-panel-section is-collapsed" id="search-panel">
+        <div class="search-bar-wrap">
+          <span class="search-icon">⌕</span>
+          <input id="search-input" type="search" placeholder="Search titles, genres, directors…" autocomplete="off">
+          <button class="clear-search" id="clear-search" aria-label="Clear search">×</button>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Filter by</span>
+          <select id="genre-filter"><option value="all">All genres</option></select>
+          <select id="language-filter"><option value="all">All languages</option></select>
+          <select id="year-filter"><option value="all">Any year</option></select>
+          <select id="rating-filter">
+            <option value="all">Any rating</option>
+            <option value="8">8.0+ rating</option>
+            <option value="9">9.0+ rating</option>
+          </select>
+          <select id="type-filter"><option value="all">All types</option></select>
+        </div>
+      </section>
+
+      <div id="search-results" class="content-section is-hidden"></div>
+
+      <section class="content-section" id="movies">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Curated for the moment</p>
+            <h2>Trending <em>now</em></h2>
+          </div>
+          <a class="text-link" href="#admin">Open catalogue <span>↗</span></a>
+        </div>
+        <div class="movie-row" id="trending-row"></div>
+      </section>
+
+      <section class="content-section" id="top-rated">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The audience has spoken</p>
+            <h2>Popular <em>movies</em></h2>
+          </div>
+        </div>
+        <div class="movie-row" id="popular-row"></div>
+      </section>
+
+      <section class="content-section" id="tvshows">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Binge-worthy · episode after episode</p>
+            <h2>New <em>series</em></h2>
+          </div>
+        </div>
+        <div class="movie-row" id="tv-row"></div>
+      </section>
+
+      <section class="content-section" id="cartoons">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Animation for every age</p>
+            <h2>Cartoon <em>club</em></h2>
+          </div>
+        </div>
+        <div class="movie-row" id="cartoon-row"></div>
+      </section>
+
+      <section class="content-section recommend-section" id="recommend-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Matched to your taste</p>
+            <h2>Picked <em>for you</em></h2>
+          </div>
+          <button class="ghost-button compact-button" id="pref-edit">Edit preferences</button>
+        </div>
+        <div class="movie-row results-grid" id="recommend-row"></div>
+      </section>
+
+      <section class="content-section split-section" id="genres">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Find your next feeling</p>
+            <h2>Explore by <em>genre</em></h2>
+          </div>
+        </div>
+        <div class="genre-grid" id="genre-grid"></div>
+      </section>
+
+      <section class="content-section watchlist-section" id="watchlist">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Saved for later</p>
+            <h2>My <em>watchlist</em></h2>
+          </div>
+          <button class="ghost-button compact-button is-hidden" id="clear-watchlist">Clear watchlist</button>
+        </div>
+        <div class="movie-row results-grid" id="watchlist-row"></div>
+      </section>
+
+      <section class="content-section" id="upcoming">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">On the horizon</p>
+            <h2>Coming <em>soon</em></h2>
+          </div>
+        </div>
+        <div class="movie-row" id="upcoming-row"></div>
+      </section>
+
+      <section class="content-section admin-section" id="admin">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Control room</p>
+            <h2>Movie <em>management</em></h2>
+            <p class="section-copy">Add a title with its genre, update details, or remove it from the catalogue. Changes appear instantly across the site.</p>
+          </div>
+          <button class="primary-button" id="add-movie-button"><span>＋</span> Add new movie</button>
+          <button class="ghost-button" id="bulk-add-button"><span>⇪</span> Bulk add</button>
+        </div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="table-shell">
+          <div class="table-toolbar">
+            <div>
+              <h3>Movie catalogue</h3>
+              <p>Create, edit, and delete records — including custom genres.</p>
+            </div>              <div class="table-tools">
+                <div class="table-search"><span>⌕</span><input id="table-search" placeholder="Search catalogue"></div>
+                <select id="table-genre"><option value="all">All genres</option></select>
+                <select id="table-status"><option value="all">All statuses</option></select>
+                <select id="table-industry"><option value="all">All industries</option></select>
+                <select id="table-type"><option value="all">All types</option></select>
+              </div>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Movie</th>
+                  <th>Genre</th>
+                  <th>Industry</th>
+                  <th>Type</th>
+                  <th>Language</th>
+                  <th>Release</th>
+                  <th>Rating</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="movie-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="brand-lockup">
+        <span class="brand-mark"><span class="brand-b">B</span><span class="brand-play">▶</span></span>
+        <span class="brand-word">BUTTERFLIX</span>
+      </div>
+      <p>Your World of Cinema</p>
+      <span class="footer-note">Movie management · © 2026</span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <div id="bulk-modal" class="modal-backdrop is-hidden">
+    <div class="confirm-modal bulk-modal" role="dialog" aria-modal="true" aria-labelledby="bulk-title">
+      <p class="eyebrow">Add many at once</p>
+      <h2 id="bulk-title">Bulk add movies</h2>
+      <p class="bulk-help">One movie per line. Format:<br><code>Title; Genre; Language; Director; Rating; Release date (YYYY-MM-DD)</code><br>Tip: paste <strong>any number of lines</strong> — 5 or 500.</p>
+      <textarea id="bulk-text" rows="7" placeholder="Virupaksha; Horror Thriller; Telugu; Karthik Varma Dandu; 7.8; 2023-05-05&#10;Sita Ramam; Romance Drama; Telugu; Hanu Raghavapudi; 8.5; 2022-08-05"></textarea>
+      <label class="bulk-industry-label">Industry
+        <select id="bulk-industry"><option>Hollywood</option><option>Bollywood</option><option>Tollywood</option></select>
+      </label>
+      <label class="bulk-industry-label">Type
+        <select id="bulk-type"><option>Movies</option><option>TV Shows</option><option>Cartoons</option></select>
+      </label>
+      <p class="bulk-counter" id="bulk-counter">0 movies detected</p>
+      <div class="form-actions">
+        <button type="button" class="ghost-button" id="bulk-cancel">Cancel</button>
+        <button type="button" class="primary-button" id="bulk-save">Add all</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="spotlight-modal" class="modal-backdrop is-hidden">
+    <div class="confirm-modal spotlight-modal" role="dialog" aria-modal="true" aria-labelledby="spotlight-title">
+      <p class="eyebrow">Featured slider</p>
+      <h2 id="spotlight-title">Manage spotlight</h2>
+      <p class="bulk-help">Tap titles to feature them. They appear in the home slider — order follows your picks. Max 8.</p>
+      <p class="spotlight-count" id="spotlight-count">0 of 8 featured</p>
+      <div id="spotlight-list" class="spotlight-list"></div>
+      <div class="form-actions">
+        <button type="button" class="ghost-button" id="spotlight-cancel">Cancel</button>
+        <button type="button" class="primary-button" id="spotlight-save">Save spotlight</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="preferences-modal" class="modal-backdrop is-hidden">
+    <div class="confirm-modal preferences-modal" role="dialog" aria-modal="true" aria-labelledby="preferences-title">
+      <p class="eyebrow">Tune your feed</p>
+      <h2 id="preferences-title">My genre preferences</h2>
+      <p class="bulk-help">Pick the genres you love — “Picked for you” updates instantly.</p>
+      <div id="preferences-chips" class="pref-chips"></div>
+      <div class="form-actions">
+        <button type="button" class="ghost-button" id="preferences-cancel">Cancel</button>
+        <button type="button" class="primary-button" id="preferences-save">Save preferences</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="movie-modal" class="modal-backdrop is-hidden">
+    <div class="movie-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div class="modal-layout">
+        <aside class="modal-preview">
+          <div id="poster-preview" class="poster-preview"></div>
+          <p class="preview-hint">Poster preview updates as you type a URL.</p>
+        </aside>
+        <div class="modal-body">
+          <div class="modal-heading">
+            <p class="eyebrow">Catalogue entry</p>
+            <h2 id="modal-title">Add a new movie</h2>
+            <p>Pick an existing genre or type a new one. Saving updates the whole library.</p>
+          </div>
+          <form id="movie-form">
+            <input type="hidden" id="movie-id" name="id">
+            <div class="form-grid">
+              <label>Movie title<input required id="movie-title" name="title" placeholder="e.g. The Quiet Between Us"></label>
+              <label>Genre
+                <input required id="movie-genre" name="genre" list="genre-options" placeholder="Action, Drama, or a new genre">
+                <datalist id="genre-options"></datalist>
+              </label>
+              <label>Industry
+                <select id="movie-industry" name="industry">
+                  <option>Hollywood</option>
+                  <option>Bollywood</option>
+                  <option>Tollywood</option>
+                </select>
+              </label>
+              <label>Type
+                <select id="movie-type" name="type">
+                  <option>Movies</option>
+                  <option>TV Shows</option>
+                  <option>Cartoons</option>
+                </select>
+              </label>
+              <label>Language<input required id="movie-language" name="language" placeholder="English"></label>
+              <label>Director<input required id="movie-director" name="director" placeholder="Director name"></label>
+              <label>Cast<input id="movie-cast" name="cast" placeholder="Lead cast, separated by commas"></label>
+              <label>Release date<input required id="movie-releaseDate" type="date" name="releaseDate"></label>
+              <label>Duration<input required id="movie-duration" name="duration" placeholder="2h 10m"></label>
+              <label>Rating<input required id="movie-rating" type="number" min="0" max="10" step="0.1" name="rating" placeholder="8.4"></label>
+              <label class="form-wide">Description<textarea required id="movie-description" name="description" rows="3" placeholder="A short, compelling description…"></textarea></label>
+              <label>Poster URL<input id="movie-poster" name="poster" placeholder="../assets/images/poster-aurora.svg"></label>
+              <label>Backdrop URL<input id="movie-backdrop" name="backdrop" placeholder="../assets/images/backdrop-aurora.svg"></label>
+              <label>Trailer URL<input id="movie-trailer" name="trailer" placeholder="https://…"></label>
+              <label>Status
+                <select id="movie-status" name="status">
+                  <option>Published</option>
+                  <option>Coming Soon</option>
+                  <option>Draft</option>
+                </select>
+              </label>
+            </div>
+            <div id="genre-chip-row" class="genre-chip-row"></div>
+            <div class="form-actions">
+              <button type="button" class="ghost-button" id="modal-cancel">Cancel</button>
+              <button type="submit" class="primary-button" id="save-movie-button">Save movie <span>↗</span></button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirm-modal" class="modal-backdrop is-hidden">
+    <div class="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <p class="eyebrow">Remove from catalogue</p>
+      <h2 id="confirm-title">Delete this movie?</h2>
+      <p id="confirm-copy">This title will be removed from every row, search, and the management table.</p>
+      <div class="form-actions">
+        <button type="button" class="ghost-button" id="confirm-cancel">Keep movie</button>
+        <button type="button" class="danger-button" id="confirm-delete">Delete movie</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="trailer-modal" class="modal-backdrop is-hidden">
+    <div class="trailer-modal" role="dialog" aria-modal="true" aria-label="Trailer player">
+      <div class="trailer-head">
+        <h2 id="trailer-title"></h2>
+        <button class="modal-close" id="trailer-close" aria-label="Close trailer">×</button>
+      </div>
+      <div class="trailer-frame-wrap">
+        <iframe id="trailer-frame" src="" title="Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

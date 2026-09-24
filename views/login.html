@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07080c">
+  <title>Login · Butterflix</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d0f16'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='%23e8c07a' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/layout.css">
+</head>
+<body data-page="auth" class="auth-page">
+  <div class="auth-backdrop" aria-hidden="true">
+    <div class="auth-glow glow-red"></div>
+    <div class="auth-glow glow-gold"></div>
+    <div class="auth-poster-strip">
+      <span style="background-image:url('../assets/images/posters/h1.jpg')"></span>
+      <span style="background-image:url('../assets/images/posters/t2.jpg')"></span>
+      <span style="background-image:url('../assets/images/posters/b1.jpg')"></span>
+      <span style="background-image:url('../assets/images/posters/h3.jpg')"></span>
+      <span style="background-image:url('../assets/images/posters/t1.jpg')"></span>
+      <span style="background-image:url('../assets/images/posters/b4.jpg')"></span>
+    </div>
+    <div class="auth-grain"></div>
+  </div>
+  <main class="auth-shell">
+    <div id="auth-butterflies" class="auth-butterfly-host"></div>
+    <section class="auth-card">
+      <a class="brand-lockup auth-brand" href="index.html">
+        <span class="brand-mark"><span class="brand-b">B</span><span class="brand-play">▶</span></span>
+        <span class="brand-word">BUTTERFLIX</span>
+      </a>
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-login" role="tab" aria-selected="true">Login</button>
+        <button class="auth-tab" id="tab-register" role="tab" aria-selected="false">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form">
+        <label>Full name<input required id="login-name" name="name" placeholder="Your name" autocomplete="name"></label>
+        <label>Email<input required id="login-email" type="email" name="email" placeholder="you@example.com" autocomplete="email"></label>
+        <label>Password<input required id="login-password" type="password" name="password" placeholder="••••••••" autocomplete="current-password"></label>
+        <label>Role
+          <select id="login-role" name="role">
+            <option value="user">User — browse & build watchlist</option>
+            <option value="admin">Admin — manage the catalogue</option>
+          </select>
+        </label>
+        <p class="auth-error is-hidden" id="login-error" role="alert"></p>
+        <button type="submit" class="primary-button auth-submit">Login</button>
+        <p class="auth-swap">New here? <button type="button" class="text-button" id="swap-to-register">Create an account</button></p>
+      </form>
+
+      <form id="register-form" class="auth-form is-hidden">
+        <label>Full name<input required id="register-name" name="name" placeholder="Your name" autocomplete="name"></label>
+        <label>Email<input required id="register-email" type="email" name="email" placeholder="you@example.com" autocomplete="email"></label>
+        <label>Password<input required id="register-password" type="password" name="password" placeholder="Minimum 4 characters" autocomplete="new-password" minlength="4"></label>
+        <label class="role-pick">I am a
+          <div class="role-toggle" id="register-role-toggle">
+            <button type="button" class="role-option" data-role="user">User</button>
+            <button type="button" class="role-option" data-role="admin">Admin</button>
+          </div>
+          <input type="hidden" id="register-role" name="role" value="user">
+        </label>
+        <div class="pref-block is-hidden" id="pref-block">
+          <p class="pref-title">Pick your favourite genres — we'll tailor recommendations</p>
+          <div class="pref-chips" id="pref-chips"></div>
+          <p class="pref-hint">You can change these anytime from your profile.</p>
+        </div>
+        <p class="auth-error is-hidden" id="register-error" role="alert"></p>
+        <button type="submit" class="primary-button auth-submit">Create account</button>
+        <p class="auth-swap">Already registered? <button type="button" class="text-button" id="swap-to-login">Login instead</button></p>
+      </form>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script type="module" src="../js/butterflies.js?v=4"></script>
+  <script type="module" src="../js/auth.js?v=5"></script>
+</body>
+</html>

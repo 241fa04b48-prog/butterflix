@@ -1,0 +1,44 @@
+{
+  "pavan@gmail.com": {
+    "email": "pavan@gmail.com",
+    "name": "pavan",
+    "watchlist": [
+      "m1790145661724",
+      "h2",
+      "h1",
+      "h3",
+      "t3"
+    ],
+    "preferences": [],
+    "savedAt": 1790145790432
+  },
+  "admin@butterflix.com": {
+    "email": "admin@butterflix.com",
+    "name": "Admin",
+    "watchlist": [],
+    "preferences": [],
+    "savedAt": 1790143585044
+  },
+  "check.user@test.com": {
+    "email": "check.user@test.com",
+    "name": "Check User",
+    "watchlist": [],
+    "preferences": [
+      "Action",
+      "Sci-Fi"
+    ],
+    "savedAt": 1790143883126
+  },
+  "manoj123@gmail.com": {
+    "email": "manoj123@gmail.com",
+    "name": "Manoj kumar",
+    "watchlist": [
+      "h4",
+      "h3",
+      "m16",
+      "m1790145661724"
+    ],
+    "preferences": [],
+    "savedAt": 1790247482823
+  }
+}
